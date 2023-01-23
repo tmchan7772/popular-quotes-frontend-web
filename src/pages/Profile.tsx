@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import LoadingProgressModal, { TitledPromise } from '../components/LoadingProgressModal';
 import { getAuthor, getAuthorQuote } from '../services/author';
 import { getCurrentProfile } from '../services/profile';
+import userIcon from '../../assets/user.png';
 
 export default function Profile() {
   const [fullname, setFullname] = useState('');
@@ -57,9 +58,12 @@ export default function Profile() {
 
   return (
     <>
-      {fullname && <h1>Welcome, {fullname}</h1>}
-      {!fullname && <h1>Loading...</h1>}
-      <Button type='primary' onClick={updateClick}>Update</Button>
+      <div className="layout profile-data">
+        <img src={userIcon}></img>
+        {fullname && <h1>Welcome, {fullname}</h1>}
+        {!fullname && <h1>Loading...</h1>}
+      </div>
+      <Button type="primary" onClick={updateClick}>Update</Button>
 
       {isLoadingQuotes && <LoadingProgressModal requests={requests} cancel={onCancel} onDone={onDone}></LoadingProgressModal>}
 

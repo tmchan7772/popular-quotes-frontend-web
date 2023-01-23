@@ -14,14 +14,6 @@ instance.interceptors.request.use(request => {
   return request;
 });
 
-// instance.interceptors.response.use(response => {
-//   if (response.status === 401) {
-
-//   }
-  
-//   return response;
-// });
-
 type HttpRequestParams = {
   signal: {
     aborted: boolean

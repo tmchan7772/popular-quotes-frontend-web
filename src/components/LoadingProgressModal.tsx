@@ -50,23 +50,23 @@ export default function LoadingProgressModal({ requests, cancel, onDone }: Loadi
 
   return (
     <Modal
-        wrapClassName='modal'
-        title={currentStep}
-        open={true}
-        keyboard={false}
-        maskClosable={false}
-        closable={false}
-        footer={
-          <div className='left-aligned'>
-            <Button key="submit" type="primary" onClick={handleCancel}>
-              Cancel
-            </Button>
-          </div>
-        }
-      >
-        {steps.map((step, index) => {
-          return <p key={index}>Step {index}: {step.title}..{step.isCompleted && 'Completed'}</p>;
-        })}
-      </Modal>
+      wrapClassName='modal'
+      title={currentStep}
+      open={true}
+      keyboard={false}
+      maskClosable={false}
+      closable={false}
+      footer={
+        <div className='left-aligned'>
+          <Button key="submit" type="primary" onClick={handleCancel}>
+            Cancel
+          </Button>
+        </div>
+      }
+    >
+      {steps.map((step, index) => {
+        return <p key={index}>Step {index}: {step.title}..{step.isCompleted && 'Completed'}</p>;
+      })}
+    </Modal>
   );
 }

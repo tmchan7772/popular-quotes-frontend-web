@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
-import { Routes, Route, Router, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import 'antd/dist/reset.css';
 import UserContextProvider from './contexts/UserContextProvider';
-import Nav from './components/Nav';
+import NavBar from './components/NavBar';
 import SignIn from './pages/SignIn';
 import { Content } from 'antd/es/layout/layout';
 import Profile from './pages/Profile';
@@ -15,18 +15,16 @@ const App = () => {
     // <StrictMode>
       <UserContextProvider>
         <Layout className="layout">
-          <Content style={{ padding: '0 50px' }}>
-            <div style={{ margin: '16px 0' }}>
-              <Nav/>
+          <Content className="container">
+            <div className="layout">
+              <NavBar/>
             </div>
-            <div className="site-layout-content">
-              <Routes>
+            <Routes>
                 <Route index element={<About />} />
                 <Route path="signIn" element={<SignIn />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </div>
           </Content>
         </Layout>
       </UserContextProvider>

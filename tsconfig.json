@@ -11,6 +11,10 @@
     "strict": true,
     "sourceMap": true,
     "target": "esnext",
+    "typeRoots": [
+      "./types.d.ts",
+      "node_modules/@types"
+    ]
   },
   "exclude": [
     "node_modules"

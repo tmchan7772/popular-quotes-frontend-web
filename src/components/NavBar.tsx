@@ -5,7 +5,7 @@ import { UserContext } from '../contexts/UserContext';
 import { logout } from '../services/auth';
 import HttpClient from '../utils/httpClient';
 
-export default function Nav() {
+export default function NavBar() {
   const { userToken, loggingOutUser } = useContext(UserContext);
   const navigate = useNavigate();
 
