@@ -1,5 +1,4 @@
-import { useReducer, ReactNode, useEffect } from 'react';
-import { redirect, useLocation, useNavigate } from 'react-router-dom';
+import { useReducer, ReactNode } from 'react';
 import { initialState, UserContext } from './UserContext';
 import { reducer } from './UserReducer';
 

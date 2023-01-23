@@ -12,9 +12,9 @@ import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
-    // <StrictMode>
+    <StrictMode>
       <UserContextProvider>
-        <Layout className="layout">
+        <Layout>
           <Content className="container">
             <div className="layout">
               <NavBar/>
@@ -28,8 +28,7 @@ const App = () => {
           </Content>
         </Layout>
       </UserContextProvider>
-      
-    // </StrictMode>
+    </StrictMode>
   );
 };
 

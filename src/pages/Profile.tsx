@@ -1,7 +1,7 @@
 import { Button, Divider, Typography } from 'antd';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LoadingProgressModal, { TitledPromise } from '../components/LoadingProgressModal';
-import { getAuthor, getAuthorQuote } from '../services/author';
+import { getAuthorCancelable, getAuthorQuoteCancelable } from '../services/author';
 import { getCurrentProfile } from '../services/profile';
 import userIcon from '../../assets/user.png';
 
@@ -11,18 +11,16 @@ export default function Profile() {
   const [authorName, setAuthorName] = useState('');
   const [authorQuote, setAuthorQuote] = useState('');
   const [requests, setRequests] = useState([] as TitledPromise<unknown>[]);
-  const refController = useRef({} as AbortController);
 
   const updateClick = () => {
-    refController.current = new AbortController();
-    const { current: controller } = refController;
-    const authorRequest = getAuthor(controller);
-    const authorQuoteRequest = authorRequest.then(response => {
-      return getAuthorQuote(response.data.authorId, controller).then(quoteResponse => {
-        setAuthorName(response.data.name);
-        setAuthorQuote(quoteResponse.data.quote);
-      });
+    const authorRequest = getAuthorCancelable();
+    const authorQuoteRequest = getAuthorQuoteCancelable(authorRequest);
+
+    authorQuoteRequest.then(response => {
+      setAuthorName(response.authorName);
+      setAuthorQuote(response.quote);
     });
+
     setRequests([
       {
         title: 'Requesting author',
@@ -38,7 +36,6 @@ export default function Profile() {
   };
 
   const onCancel = useCallback(() => {
-    refController.current.abort();
     setIsLoadingQuotes(false);
   }, []);
 
