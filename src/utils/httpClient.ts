@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, CanceledError } from 'axios';
 
 const instance = axios.create({
     baseURL: process.env.API_URL,
@@ -38,6 +38,33 @@ export interface PromiseCancelable<T> extends Promise<T> {
 export type HttpAbortableRequest<T> = { run: () => Promise<HttpResponse<T>>, abort: () => void };
 
 export default class HttpClient {
+  // should be called after all specific handlers
+  static setupGlobalErrorHandler(showError: () => void) {
+    instance.interceptors.response.use(response => {
+        return response;
+      }, (error) => {
+        if (error instanceof CanceledError) {
+          return;
+        }
+
+        showError();
+        return Promise.reject(error);
+      });
+  }
+
+  static setup401Handler(goToLoginPage: () => void) {
+    instance.interceptors.response.use(response => {
+        return response;
+      }, (error) => {
+        if (error && error.response && error.response.status === 401) {
+          goToLoginPage();
+          return;
+        }
+
+        return Promise.reject(error);
+      });
+  }
+
   static getCancelable<Response>(url: string): PromiseCancelable<HttpResponse<Response>> {
     const controller = new AbortController();
     const request = instance.get<Response, AxiosResponse<HttResponseData<Response>>>(url, { signal: controller.signal }).then((response) => {

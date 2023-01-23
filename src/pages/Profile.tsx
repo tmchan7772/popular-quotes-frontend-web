@@ -24,11 +24,11 @@ export default function Profile() {
     });
     setRequests([
       {
-        title: 'Request author',
+        title: 'Requesting author',
         promise: authorRequest
       },
       {
-        title: 'Request quote',
+        title: 'Requesting quote',
         promise: authorQuoteRequest
       }
     ]);

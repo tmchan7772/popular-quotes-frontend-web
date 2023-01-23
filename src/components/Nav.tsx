@@ -1,8 +1,9 @@
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import { logout } from '../services/auth';
+import HttpClient from '../utils/httpClient';
 
 export default function Nav() {
   const { userToken, loggingOutUser } = useContext(UserContext);
@@ -14,6 +15,24 @@ export default function Nav() {
       navigate('/');
     });
   };
+
+  HttpClient.setup401Handler(() => {
+    loggingOutUser && loggingOutUser();
+    Modal.confirm({
+      title: 'Error',
+      content: 'The session has expired. Please signin again',
+      onOk: () => {
+        navigate('/signIn');
+      }
+    });
+  });
+
+  HttpClient.setupGlobalErrorHandler(() => {
+    Modal.error({
+      title: 'Error',
+      content: 'Something went wrong...'
+    });
+  });
 
   return (
     <nav>

@@ -1,3 +1,15 @@
 /* nav > * {
   margin: 10px;
 } */
+
+.invisible {
+  display: none;
+}
+
+.left-aligned {
+  text-align: left;
+}
+
+.modal .ant-modal .ant-modal-title {
+  font-size: 2rem;
+}
