@@ -1,27 +1,38 @@
 import { StrictMode } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { Layout } from 'antd';
+import 'antd/dist/reset.css';
+import UserContextProvider from './contexts/UserContextProvider';
+import Nav from './components/Nav';
+import SignIn from './pages/SignIn';
+import { Content } from 'antd/es/layout/layout';
+import Profile from './pages/Profile';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
-    <StrictMode>
-      <h1>Popular quotes app</h1>
-
-      <nav>
-        <Link to="/">About</Link>
-        <Link to="/login">Login</Link>
-      </nav>
-
-      <Routes>
-        <Route index element={<div>About us content</div>} />
-        <Route path="login" element={<div>Login content</div>} />
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
-    </StrictMode>
+    // <StrictMode>
+      <UserContextProvider>
+        <Layout className="layout">
+          <Content style={{ padding: '0 50px' }}>
+            <div style={{ margin: '16px 0' }}>
+              <Nav/>
+            </div>
+            <div className="site-layout-content">
+              <Routes>
+                <Route index element={<About />} />
+                <Route path="signIn" element={<SignIn />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </Content>
+        </Layout>
+      </UserContextProvider>
+      
+    // </StrictMode>
   );
-};
-
-const NoMatch = () => {
-  return <p>Not found</p>;
 };
 
 export default App;
