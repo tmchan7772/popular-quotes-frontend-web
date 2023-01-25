@@ -1,10 +1,10 @@
 import { useReducer, ReactNode } from 'react';
-import { initialState, UserContext } from './UserContext';
-import { reducer } from './UserReducer';
+import { UserContext } from './UserContext';
+import { initialState, reducer } from './userReducer';
 
 type Props = {
   children: ReactNode;
-}
+};
 
 export default function UserContextProvider({ children }: Props) {
   const [state, dispatch] = useReducer(reducer, initialState);

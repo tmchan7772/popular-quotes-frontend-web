@@ -60,10 +60,12 @@ export default class HttpClient {
   static getCancelable<Response>(url: string, aborController?: AbortController): PromiseCancelable<HttpResponse<Response>> {
     const controller = aborController || new AbortController();
     const request = instance.get<Response, AxiosResponse<HttResponseData<Response>>>(url, { signal: controller.signal }).then((response) => {
-      return {
-        status: response.status,
-        data: response.data.data
-      } as HttpResponse<Response>;
+      return response
+        ? {
+          status: response.status,
+          data: response.data.data
+        } as HttpResponse<Response>
+        : undefined;
     }) as PromiseCancelable<HttpResponse<Response>>;
   
     request.cancel = () => controller.abort();
