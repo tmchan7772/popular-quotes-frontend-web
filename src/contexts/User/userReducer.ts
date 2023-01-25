@@ -1,4 +1,10 @@
-import { UserState } from './UserContext';
+export interface UserState {
+  userToken?: string;
+};
+
+export const initialState = {
+  userToken: localStorage.getItem('token') || undefined
+};
 
 type LoginSuccededPayload = { token: string };
 
