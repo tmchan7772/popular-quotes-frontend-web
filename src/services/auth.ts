@@ -7,6 +7,6 @@ export function login(payload: LoginRequest) {
   return HttpClient.post<LoginRequest, LoginResponse>('/login', payload);
 }
 
-export function logout() {
-  return HttpClient.delete('/logout');
+export async function logout() {
+  await HttpClient.delete('/logout');
 }

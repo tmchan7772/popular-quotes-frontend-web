@@ -12,13 +12,19 @@ export function getAuthorCancelable() {
 export function getAuthorQuoteCancelable(authorPromise: Promise<HttpResponse<AuthorData>>) {
   const abortController = new AbortController();
   const req = authorPromise.then(response => {
-    return HttpClient.getCancelable<QuoteData>(`/quote?authorId=${response.data.authorId}`, abortController)
-      .then(quoteData => {
-        return {
-          ...quoteData.data,
-          authorName: response.data.name
-        } as AuthorQuoteData;
-      });
+    if (response) {
+      return HttpClient.getCancelable<QuoteData>(`/quote?authorId=${response.data.authorId}`, abortController)
+        .then(quoteData => {
+          return quoteData
+            ? {
+              ...quoteData.data,
+              authorName: response.data.name
+            } as AuthorQuoteData
+            : undefined;
+        });
+    }
+
+    return undefined;
   }) as PromiseCancelable<AuthorQuoteData>;
   
   req.cancel = () => abortController.abort();

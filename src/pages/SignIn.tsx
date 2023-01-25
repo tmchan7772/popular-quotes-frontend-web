@@ -2,7 +2,7 @@ import { Button, Form, Input } from 'antd';
 import { FormLayout } from 'antd/es/form/Form';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../contexts/User/UserContext';
 import { login } from '../services/auth';
 
 export default function SignIn() {
@@ -13,7 +13,7 @@ export default function SignIn() {
   
   const onFinish = (values: { email: string, password: string }) => {
     login(values).then((response) => {
-      logginginUser && logginginUser(response.data.token);
+      logginginUser(response.data.token);
       navigate('/profile');
     });
   };
